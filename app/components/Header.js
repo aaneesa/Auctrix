@@ -19,9 +19,6 @@ export default function Header() {
             <Link href="/property-listings" className="text-gray-100 hover:text-white transition-colors">
               Listings
             </Link>
-            <Link href="/auctions" className="text-gray-100 hover:text-white transition-colors">
-              Auctions
-            </Link>
             <Link href="/contact" className="text-gray-100 hover:text-white transition-colors">
               Contact
             </Link>

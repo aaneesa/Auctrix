@@ -1,7 +1,6 @@
 export default function About() {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
       <div className="bg-slate-900 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">About Auctrix</h1>
@@ -11,9 +10,7 @@ export default function About() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Company Overview */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-6">Our Story</h2>
           <div className="grid md:grid-cols-2 gap-8">
@@ -35,8 +32,6 @@ export default function About() {
             </div>
           </div>
         </section>
-
-        {/* Mission & Values */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-6">Our Mission & Values</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -60,30 +55,40 @@ export default function About() {
             </div>
           </div>
         </section>
-
-        {/* Team Section */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold mb-6">Our Team</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
-              <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4"></div>
-              <h3 className="text-xl font-semibold mb-2">John Smith</h3>
+              <img 
+                src="/image/team/ceo.webp" 
+                alt="John Smith - CEO" 
+                className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
+              />
+              <h3 className="text-xl font-semibold mb-2">Anwesha Adhikari</h3>
               <p className="text-gray-600 mb-2">CEO & Founder</p>
               <p className="text-gray-500 text-sm">
                 With over 20 years in real estate and technology, John leads Auctrix with vision and expertise.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
-              <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4"></div>
-              <h3 className="text-xl font-semibold mb-2">Sarah Johnson</h3>
+              <img 
+                src="/image/team/opearations.jpg" 
+                alt="Sarah Johnson - Head of Operations" 
+                className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
+              />
+              <h3 className="text-xl font-semibold mb-2">Ditya Sharma</h3>
               <p className="text-gray-600 mb-2">Head of Operations</p>
               <p className="text-gray-500 text-sm">
                 Sarah ensures smooth operations and exceptional customer service across all departments.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
-              <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4"></div>
-              <h3 className="text-xl font-semibold mb-2">Michael Chen</h3>
+              <img 
+                src="/image/team/tech.webp" 
+                alt="Michael Chen - Technology Director" 
+                className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
+              />
+              <h3 className="text-xl font-semibold mb-2">Ayush Mittal</h3>
               <p className="text-gray-600 mb-2">Technology Director</p>
               <p className="text-gray-500 text-sm">
                 Michael leads our technology team in developing innovative solutions for the property market.
@@ -91,8 +96,6 @@ export default function About() {
             </div>
           </div>
         </section>
-
-        {/* CTA Section */}
         <section className="bg-slate-900 text-white rounded-2xl p-12 text-center">
           <h2 className="text-3xl font-bold mb-4">Join Our Journey</h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
@@ -106,7 +109,7 @@ export default function About() {
               Contact Us
             </a>
             <a
-              href="/get-started"
+              href="/"
               className="px-8 py-3 bg-slate-800 text-white rounded-xl hover:bg-slate-700 transition-colors font-medium"
             >
               Get Started

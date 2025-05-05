@@ -34,7 +34,6 @@ export default function Contact() {
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact Form */}
           <div className="bg-white p-8 rounded-2xl shadow-sm">
             <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
             <form onSubmit={handleSubmit} className="space-y-6">

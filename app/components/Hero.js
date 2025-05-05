@@ -9,7 +9,7 @@ export default function Hero() {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/hero-bg.jpeg')",
+            backgroundImage: "url('/Image/hero-bg.jpeg')",
           }}
         >
           <div className="absolute inset-0 bg-black/50" />
@@ -38,7 +38,7 @@ export default function Hero() {
               <option value="">Property Type</option>
               <option value="house">House</option>
               <option value="apartment">Apartment</option>
-              <option value="land">Land</option>
+              <option value="commercial">Land</option>
             </select>
             <button
               type="submit"
@@ -49,18 +49,12 @@ export default function Hero() {
           </form>
         </div>
 
-        <div className="mt-8 flex gap-4">
+        <div className="mt-8">
           <Link
             href="/property-listings"
             className="px-8 py-3 bg-white text-slate-900 rounded-xl hover:bg-gray-100 transition-colors font-medium"
           >
             Browse Listings
-          </Link>
-          <Link
-            href="/get-started"
-            className="px-8 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition-colors font-medium"
-          >
-            Get Started
           </Link>
         </div>
       </div>
