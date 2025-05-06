@@ -98,11 +98,11 @@ export default function Contact() {
                 </p>
                 <p className="flex items-start">
                   <span className="font-medium mr-2">Phone:</span>
-                  +91 22 1234 5678
+                  +91 98765 43210
                 </p>
                 <p className="flex items-start">
                   <span className="font-medium mr-2">Email:</span>
-                  info@auctrix.in
+                  info@auctrix.com
                 </p>
               </div>
             </div>

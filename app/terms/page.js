@@ -84,7 +84,7 @@ export default function Terms() {
                 If you have any questions about these Terms & Services, please contact us at:
               </p>
               <ul className="list-disc list-inside text-gray-600 mt-2">
-                <li>Email: legal@auctrix.com</li>
+                <li>Email: info@auctrix.com</li>
                 <li>Phone: +91 98765 43210</li>
                 <li>Address: Auctrix Tower, 123 MG Road, Mumbai, Maharashtra 400001</li>
               </ul>
