@@ -111,7 +111,7 @@ export default function Contact() {
               <h2 className="text-2xl font-bold mb-6">Find Us</h2>
               <div className="aspect-w-16 aspect-h-9">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.00271467895!2d72.82451537500001!3d19.0759837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%20Central%20Station!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3774.0486855080812!2d72.8289374750599!3d18.929239056563773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7d1c31ae9a6a5%3A0xfdeb9c163c06ef00!2s123%2C%20Mahatma%20Gandhi%20Road%2C%20Kala%20Ghoda%2C%20Fort%2C%20Mumbai%2C%20Maharashtra%20400001!5e0!3m2!1sen!2sin!4v1746504528234!5m2!1sen!2sin"
                   width="100%"
                   height="300"
                   style={{ border: 0 }}
