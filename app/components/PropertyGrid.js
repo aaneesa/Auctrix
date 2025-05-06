@@ -11,7 +11,7 @@ export default function PropertyGrid() {
       bedrooms: 4,
       bathrooms: 3,
       area: '2500 sq.ft',
-      auctionEnds: '2024-04-15T18:00:00',
+      auctionEnds: '2025-09-15T18:00:00',
     },
     {
       id: 2,
@@ -33,7 +33,7 @@ export default function PropertyGrid() {
       bedrooms: 0,
       bathrooms: 2,
       area: '3000 sq.ft',
-      auctionEnds: '2024-04-18T12:00:00',
+      auctionEnds: '2025-05-18T12:00:00',
     },
   ];
 
