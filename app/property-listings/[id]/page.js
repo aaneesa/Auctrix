@@ -1,11 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 
 export default function PropertyDetails() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
   const property = {
     title: "Luxury 3-Bedroom Apartment in Bandra",
     description: "Experience luxury living in this stunning 3-bedroom apartment located in the heart of Bandra. This property features modern architecture, high-end finishes, and panoramic city views. The apartment includes a spacious living room, modern kitchen with premium appliances, three well-appointed bedrooms with en-suite bathrooms, and a private balcony. The building offers 24/7 security, covered parking, a swimming pool, fitness center, and landscaped gardens.",
@@ -15,12 +12,7 @@ export default function PropertyDetails() {
     area: "2,200 sq.ft",
     bedrooms: 3,
     bathrooms: 3,
-    images: [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070",
-      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?q=80&w=2070",
-      "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=2074",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053",
-    ],
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070",
     amenities: [
       "Swimming Pool",
       "Fitness Center",
@@ -33,45 +25,17 @@ export default function PropertyDetails() {
     ]
   };
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === property.images.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === 0 ? property.images.length - 1 : prev - 1
-    );
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="relative h-[500px] bg-slate-900">
         <div className="relative h-full">
           <Image
-            src={property.images[currentImageIndex]}
+            src={property.image}
             alt={property.title}
             fill
             className="object-cover"
           />
           <div className="absolute inset-0 bg-black bg-opacity-40" />
-          
-          <button 
-            onClick={prevImage}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 p-2 rounded-full hover:bg-opacity-100 transition-all"
-          >
-            ←
-          </button>
-          <button 
-            onClick={nextImage}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 p-2 rounded-full hover:bg-opacity-100 transition-all"
-          >
-            →
-          </button>
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-60 text-white px-4 py-2 rounded-full">
-            {currentImageIndex + 1} / {property.images.length}
-          </div>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
