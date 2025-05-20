@@ -60,8 +60,8 @@ export default function About() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
               <img 
-                src="/image/team/ceo.webp" 
-                alt="John Smith - CEO" 
+                src="/images/team/ceo.webp" 
+                alt="Anwesha Adhikari - CEO" 
                 className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
               />
               <h3 className="text-xl font-semibold mb-2">Anwesha Adhikari</h3>
@@ -72,8 +72,8 @@ export default function About() {
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
               <img 
-                src="/image/team/opearations.jpg" 
-                alt="Sarah Johnson - Head of Operations" 
+                src="/images/team/opearations.jpg" 
+                alt="Ditya Sharma - Head of Operations" 
                 className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
               />
               <h3 className="text-xl font-semibold mb-2">Ditya Sharma</h3>
@@ -84,8 +84,8 @@ export default function About() {
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
               <img 
-                src="/image/team/tech.webp" 
-                alt="Michael Chen - Technology Director" 
+                src="/images/team/tech.webp" 
+                alt="Ayush Mittal - Technology Director" 
                 className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
               />
               <h3 className="text-xl font-semibold mb-2">Ayush Mittal</h3>

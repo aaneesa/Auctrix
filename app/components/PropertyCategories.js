@@ -4,19 +4,19 @@ export default function PropertyCategories() {
   const categories = [
     {
       title: 'Houses',
-      image: '/image/categories/house.jpeg',
+      image: '/images/categories/house.jpeg',
       description: 'Find your dream home from our extensive collection of houses.',
       link: '/properties?type=house'
     },
     {
       title: 'Apartments',
-      image: '/image/categories/apartment.jpg',
+      image: '/images/categories/apartment.jpg',
       description: 'Modern apartments in prime locations across the city.',
       link: '/properties?type=apartment'
     },
     {
       title: 'Commercial',
-      image: '/image/categories/commercial.jpeg',
+      image: '/images/categories/commercial.jpeg',
       description: 'Prime land plots for your future development projects.',
       link: '/properties?type=land'
     },
