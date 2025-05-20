@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function PropertyCategories() {
   const categories = [
@@ -33,12 +34,14 @@ export default function PropertyCategories() {
               key={category.title}
               className="group"
             >
-              <div className="bg-white rounded-xl shadow-sm overflow-hidden transition-transform duration-300 group-hover:shadow-md group-hover:-translate-y-1">
-                <div className="relative h-48">
-                  <img
+              <div className="bg-white rounded-xl shadow-sm overflow-hidden transition-transform duration-300 group-hover:shadow-md group-hover:-translate-y-1 cursor-pointer">
+                <div className="relative h-48 w-full">
+                  <Image
                     src={category.image}
                     alt={category.title}
-                    className="w-full h-full object-cover"
+                    layout="fill"
+                    objectFit="cover"
+                    priority={true}  
                   />
                 </div>
                 <div className="p-6">
@@ -52,4 +55,4 @@ export default function PropertyCategories() {
       </div>
     </section>
   );
-} 
+}
