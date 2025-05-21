@@ -1,46 +1,34 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function PropertyGrid() {
-  const properties = [
-    {
-      id: 1,
-      title: 'Modern Villa in Bandra',
-      image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&auto=format&fit=crop&q=60',
-      price: '₹2.5 Cr',
-      location: 'Bandra West, Mumbai',
-      bedrooms: 4,
-      bathrooms: 3,
-      area: '2500 sq.ft',
-      auctionEnds: '2025-09-15T18:00:00',
-    },
-    {
-      id: 2,
-      title: 'Luxury Apartment in Powai',
-      image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=60',
-      price: '₹1.8 Cr',
-      location: 'Powai, Mumbai',
-      bedrooms: 3,
-      bathrooms: 2,
-      area: '1800 sq.ft',
-      auctionEnds: '2024-04-20T15:00:00',
-    },
-    {
-      id: 3,
-      title: 'Commercial Space in BKC',
-      image: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop&q=60',
-      price: '₹4.2 Cr',
-      location: 'BKC, Mumbai',
-      bedrooms: 0,
-      bathrooms: 2,
-      area: '3000 sq.ft',
-      auctionEnds: '2025-05-18T12:00:00',
-    },
-  ];
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const res = await fetch('https://9753b703-d6ef-480c-8852-fbb4240099e7.mock.pstmn.io/properties');
+        const data = await res.json();
+        setProperties(data); 
+      } catch (error) {
+        console.error('Failed to fetch properties:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, []);
 
   const formatTimeRemaining = (endDate) => {
     const now = new Date();
     const end = new Date(endDate);
     const diff = end - now;
+
+    if (diff <= 0) return 'Auction Ended';
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -48,6 +36,10 @@ export default function PropertyGrid() {
 
     return `${days}d ${hours}h ${minutes}m`;
   };
+
+  if (loading) {
+    return <div className="text-center py-10 text-xl">Loading properties...</div>;
+  }
 
   return (
     <section className="py-16 bg-gray-50">
@@ -98,4 +90,4 @@ export default function PropertyGrid() {
       </div>
     </section>
   );
-} 
+}
