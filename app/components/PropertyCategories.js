@@ -39,8 +39,8 @@ export default function PropertyCategories() {
                   <Image
                     src={category.image}
                     alt={category.title}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    className="object-cover"
                     priority={true}  
                   />
                 </div>
