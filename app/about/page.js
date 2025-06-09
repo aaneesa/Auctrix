@@ -79,7 +79,7 @@ export default function About() {
               <h3 className="text-xl font-semibold mb-2">Ditya Sharma</h3>
               <p className="text-gray-600 mb-2">Head of Operations</p>
               <p className="text-gray-500 text-sm">
-                Sarah ensures smooth operations and exceptional customer service across all departments.
+                Ditya ensures smooth operations and exceptional customer service across all departments.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
@@ -91,7 +91,7 @@ export default function About() {
               <h3 className="text-xl font-semibold mb-2">Ayush Mittal</h3>
               <p className="text-gray-600 mb-2">Technology Director</p>
               <p className="text-gray-500 text-sm">
-                Michael leads our technology team in developing innovative solutions for the property market.
+                Ayush leads our technology team in developing innovative solutions for the property market.
               </p>
             </div>
           </div>

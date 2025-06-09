@@ -19,34 +19,6 @@ export default function Hero() {
           Find Your Dream Property Today
         </h1>
 
-        <div className="w-full max-w-3xl bg-white/90 p-6 rounded-2xl shadow-lg">
-          <form className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <input
-              type="text"
-              placeholder="Location"
-              className="px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-500"
-            />
-            <select className="px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-500">
-              <option value="">Price Range</option>
-              <option value="0-5000000">₹0 - ₹50 Lakhs</option>
-              <option value="5000000-20000000">₹50 Lakhs - ₹2 Crore</option>
-              <option value="20000000+">₹2 Crore+</option>
-            </select>
-            <select className="px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-500">
-              <option value="">Property Type</option>
-              <option value="house">House</option>
-              <option value="apartment">Apartment</option>
-              <option value="commercial">Land</option>
-            </select>
-            <button
-              type="submit"
-              className="px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition-colors font-medium"
-            >
-              Search
-            </button>
-          </form>
-        </div>
-
         <div className="mt-8">
           <Link
             href="/property-listings"
@@ -58,4 +30,4 @@ export default function Hero() {
       </div>
     </div>
   );
-} 
+}

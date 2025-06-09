@@ -1,7 +1,7 @@
 export async function GET() {
   try {
     console.log('Fetching properties from mock server...');
-    const response = await fetch('https://9753b703-d6ef-480c-8852-fbb4240099e7.mock.pstmn.io/properties', {
+    const response = await fetch('https://listings.free.beeceptor.com/listings', {
       headers: {
         'Accept': 'application/json',
       },
@@ -15,8 +15,7 @@ export async function GET() {
 
     const data = await response.json();
     console.log('Total properties received:', data.length);
-    
-    // Ensure we're returning all properties
+  
     return Response.json({ 
       properties: data,
       total: data.length 
