@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 
 export default function PropertyCategories() {
@@ -6,20 +5,17 @@ export default function PropertyCategories() {
     {
       title: 'Houses',
       image: '/images/categories/house.jpeg',
-      description: 'Find your dream home from our extensive collection of houses.',
-      link: '/properties?type=house'
+      description: 'Find your dream home from our extensive collection of houses.'
     },
     {
       title: 'Apartments',
       image: '/images/categories/apartment.jpg',
-      description: 'Modern apartments in prime locations across the city.',
-      link: '/properties?type=apartment'
+      description: 'Modern apartments in prime locations across the city.'
     },
     {
       title: 'Commercial',
       image: '/images/categories/commercial.jpeg',
-      description: 'Prime land plots for your future development projects.',
-      link: '/properties?type=land'
+      description: 'Prime land plots for your future development projects.'
     },
   ];
 
@@ -29,12 +25,11 @@ export default function PropertyCategories() {
         <h2 className="text-3xl font-bold text-center mb-12">Property Categories</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {categories.map((category) => (
-            <Link 
-              href={category.link} 
+            <div 
               key={category.title}
               className="group"
             >
-              <div className="bg-white rounded-xl shadow-sm overflow-hidden transition-transform duration-300 group-hover:shadow-md group-hover:-translate-y-1 cursor-pointer">
+              <div className="bg-white rounded-xl shadow-sm overflow-hidden transition-transform duration-300 group-hover:shadow-md group-hover:-translate-y-1">
                 <div className="relative h-48 w-full">
                   <Image
                     src={category.image}
@@ -49,7 +44,7 @@ export default function PropertyCategories() {
                   <p className="text-gray-600">{category.description}</p>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
