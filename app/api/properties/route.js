@@ -1,7 +1,7 @@
 export async function GET() {
   try {
     console.log('Fetching properties from mock server...');
-    const response = await fetch('https://listings.free.beeceptor.com/listings', {
+    const response = await fetch('https://propertylist.free.beeceptor.com/propertylist', {
       headers: {
         'Accept': 'application/json',
       },

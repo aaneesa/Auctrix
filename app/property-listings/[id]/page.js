@@ -2,191 +2,266 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import Link from 'next/link';
 
-export default function PropertyDetails() {
-  const { id } = useParams();
+export default function PropertyDetails({ params }) {
   const [property, setProperty] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [bidAmount, setBidAmount] = useState('');
+  const [showBidModal, setShowBidModal] = useState(false);
 
   useEffect(() => {
     const fetchProperty = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/properties/${id}`);
+        setError(null);
+
+        const response = await fetch('https://listingsprop.free.beeceptor.com/listingsprop', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          cache: 'no-store',
+        });
+
         if (!response.ok) {
-          throw new Error('Failed to fetch property details');
+          throw new Error(`Failed to fetch properties: ${response.status}`);
         }
-        const data = await response.json();
-        if (data.error) {
-          throw new Error(data.error);
+
+        const allProperties = await response.json();
+
+        if (!Array.isArray(allProperties)) {
+          throw new Error('Invalid response format');
         }
-        setProperty(data);
+
+        const matched = allProperties.find(
+          (item) => String(item.id) === String(params.id)
+        );
+
+        if (!matched) {
+          throw new Error('Property not found');
+        }
+
+        setProperty(matched);
       } catch (err) {
-        console.error('Error fetching property details:', err);
-        setError(err.message);
+        console.error('Fetch error:', err);
+        setError(err.message || 'Unable to load property details');
       } finally {
         setLoading(false);
       }
     };
 
     fetchProperty();
-  }, [id]);
+  }, [params.id]);
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === property.detailImages.length - 1 ? 0 : prev + 1
-    );
+  const formatPrice = (price) => {
+    if (!price) return 'Price Not Available';
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0,
+    }).format(price);
   };
 
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === 0 ? property.detailImages.length - 1 : prev - 1
-    );
+  const handleBidSubmit = async (e) => {
+    e.preventDefault();
+    // You can implement bid submission logic here if needed
+    setShowBidModal(false);
   };
 
+  // Loading State
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900"></div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading property details...</p>
+        </div>
       </div>
     );
   }
 
+  // Error State
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-semibold text-slate-900 mb-2">Error</h2>
-          <p className="text-gray-600">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="mt-4 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800"
+          <p className="text-red-600 mb-4">{error}</p>
+          <Link 
+            href="/property-listings"
+            className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800"
           >
-            Try Again
-          </button>
+            Back to Listings
+          </Link>
         </div>
       </div>
     );
   }
 
+  // Property Not Found
   if (!property) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-semibold text-slate-900 mb-2">Property Not Found</h2>
-          <p className="text-gray-600">The property you're looking for doesn't exist.</p>
+          <Link 
+            href="/property-listings"
+            className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800"
+          >
+            Back to Listings
+          </Link>
         </div>
       </div>
     );
   }
 
+  // Main Page
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Property Overview */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        {/* Image Gallery */}
-        <div className="relative h-[400px] rounded-xl overflow-hidden">
-          <Image
-            src={property.detailImages[currentImageIndex]}
-            alt={property.title}
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 flex items-center justify-between p-4">
-            <button
-              onClick={prevImage}
-              className="bg-white/80 p-2 rounded-full hover:bg-white"
-            >
-              ←
-            </button>
-            <button
-              onClick={nextImage}
-              className="bg-white/80 p-2 rounded-full hover:bg-white"
-            >
-              →
-            </button>
-          </div>
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-            {property.detailImages.map((_, index) => (
-              <div
-                key={index}
-                className={`w-2 h-2 rounded-full ${
-                  index === currentImageIndex ? 'bg-white' : 'bg-white/50'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Property Info */}
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">
-              {property.title}
-            </h1>
-            <p className="text-gray-600">{property.location}</p>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <span className="text-2xl font-bold text-slate-900">
-              ₹{property.price.toLocaleString()}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-3 gap-4">
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <p className="text-sm text-gray-600">Bedrooms</p>
-              <p className="text-xl font-semibold">{property.bedrooms}</p>
-            </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <p className="text-sm text-gray-600">Bathrooms</p>
-              <p className="text-xl font-semibold">{property.bathrooms}</p>
-            </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <p className="text-sm text-gray-600">Area</p>
-              <p className="text-xl font-semibold">{property.area} sqft</p>
+    <main className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <div className="relative h-[60vh] w-full">
+        <Image
+          src={property.heroImage}
+          alt={property.title}
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end pb-12">
+            <div className="text-white">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">{property.title}</h1>
+              <p className="text-xl">{property.location}</p>
             </div>
           </div>
-
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Description</h2>
-            <p className="text-gray-600">{property.description}</p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Amenities</h2>
-            <div className="flex flex-wrap gap-2">
-              {property.amenities.map((amenity, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm"
-                >
-                  {amenity}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Nearest Schools</h2>
-            <div className="space-y-2">
-              {property.nearestSchools.map((school, index) => (
-                <div key={index} className="flex justify-between items-center">
-                  <span className="text-gray-600">{school.name}</span>
-                  <span className="text-sm text-gray-500">{school.distance_km} km</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <button className="w-full bg-slate-900 text-white py-3 rounded-lg hover:bg-slate-800 transition-colors">
-            View Auction Details
-          </button>
         </div>
       </div>
-    </div>
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Info */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h2 className="text-3xl font-bold text-slate-900 mb-2">
+                    {formatPrice(property.price)}
+                  </h2>
+                  <span className="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
+                    {property.auctionStatus}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowBidModal(true)}
+                  className="px-6 py-3 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
+                >
+                  Place Bid
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+              <h2 className="text-2xl font-semibold mb-4">Description</h2>
+              <p className="text-gray-600 whitespace-pre-line">{property.description}</p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+              <h2 className="text-2xl font-semibold mb-4">Amenities</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {property.amenities?.map((amenity, index) => (
+                  <div key={index} className="flex items-center space-x-2">
+                    <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>{amenity}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Owner Info and Contact */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+              <h2 className="text-2xl font-semibold mb-4">Owner Information</h2>
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="w-16 h-16 relative rounded-full overflow-hidden">
+                  <Image
+                    src={property.ownerImage}
+                    alt={property.ownerName}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="font-semibold">{property.ownerName}</h3>
+                  <p className="text-gray-600">Property Owner</p>
+                </div>
+              </div>
+              <p className="text-gray-600 mb-4">{property.ownerDescription}</p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-2xl font-semibold mb-4">Contact Information</h2>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <span>{property.contactPhone}</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <span>{property.contactEmail}</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <span>{property.location}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bid Modal */}
+      {showBidModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl p-6 max-w-md w-full">
+            <h2 className="text-2xl font-semibold mb-4">Place Your Bid</h2>
+            <form onSubmit={handleBidSubmit}>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2">Bid Amount (₹)</label>
+                <input
+                  type="number"
+                  value={bidAmount}
+                  onChange={(e) => setBidAmount(e.target.value)}
+                  className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-slate-900"
+                  placeholder="Enter your bid amount"
+                  required
+                  min={property.minimumBid}
+                />
+                <p className="text-sm text-gray-500 mt-1">
+                  Minimum bid: {formatPrice(property.minimumBid)}
+                </p>
+              </div>
+              <div className="flex justify-end space-x-4">
+                <button
+                  type="button"
+                  onClick={() => setShowBidModal(false)}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800"
+                >
+                  Submit Bid
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </main>
   );
-} 
+}

@@ -1,69 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function PropertyGrid() {
-  const [properties, setProperties] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
-
-    const fetchProperties = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        console.log('Fetching properties...');
-        
-        const response = await fetch('/api/properties', {
-          cache: 'no-store',
-          signal: controller.signal
-        });
-        
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.details || 'Failed to fetch properties');
-        }
-        
-        const data = await response.json();
-        console.log('Received properties:', data);
-        
-        if (!isMounted) return;
-        
-        if (!data.properties || !Array.isArray(data.properties)) {
-          throw new Error('Invalid data format received');
-        }
-        
-        console.log('Setting properties:', data.properties.length);
-        setProperties(data.properties);
-      } catch (err) {
-        if (!isMounted) return;
-        
-        console.error('Error in PropertyGrid:', err);
-        if (err.name === 'AbortError') {
-          console.log('Fetch aborted');
-          return;
-        }
-        setError(err.message);
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchProperties();
-
-    return () => {
-      isMounted = false;
-      controller.abort();
-    };
-  }, []);
-
+export default function PropertyGrid({ properties = [] }) {
   const formatPrice = (price) => {
     if (!price) return 'Price Not Available';
     return new Intl.NumberFormat('en-IN', {
@@ -73,42 +13,16 @@ export default function PropertyGrid() {
     }).format(price);
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-semibold text-slate-900 mb-2">Error</h2>
-          <p className="text-gray-600">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="mt-4 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (!properties.length) {
+  if (!properties || properties.length === 0) {
     return (
       <div className="min-h-[400px] flex items-center justify-center">
         <div className="text-center">
-          <p className="text-xl text-gray-600">No properties found.</p>
+          <p className="text-xl text-gray-600">No properties found matching your criteria.</p>
+          <p className="text-gray-500 mt-2">Try adjusting your filters or search terms.</p>
         </div>
       </div>
     );
   }
-
-  console.log('Rendering properties:', properties.length);
 
   return (
     <section className="py-16 bg-gray-50">
