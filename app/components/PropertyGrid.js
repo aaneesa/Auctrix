@@ -46,7 +46,23 @@ export default function PropertyGrid({ properties = [] }) {
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{property.title}</h3>
+                  <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+                    {property.title}
+                    {property.auctionStatus && (
+                      <span
+                        className={
+                          `px-2 py-1 rounded-full text-xs font-semibold ` +
+                          (property.auctionStatus.toLowerCase() === 'live'
+                            ? 'bg-green-100 text-green-800'
+                            : property.auctionStatus.toLowerCase() === 'upcoming'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-gray-200 text-gray-700')
+                        }
+                      >
+                        {property.auctionStatus.charAt(0).toUpperCase() + property.auctionStatus.slice(1)}
+                      </span>
+                    )}
+                  </h3>
                   <p className="text-gray-600 mb-4">{property.location}</p>
                   <div className="flex justify-between items-center mb-4">
                     <span className="text-2xl font-bold text-slate-900">

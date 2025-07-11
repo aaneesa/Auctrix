@@ -4,6 +4,43 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+function CountdownTimer({ endTime }) {
+  const calculateTimeLeft = () => {
+    const difference = +new Date(endTime) - +new Date();
+    let timeLeft = {};
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    } else {
+      timeLeft = null;
+    }
+    return timeLeft;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [endTime]);
+
+  if (!timeLeft) {
+    return <span className="text-red-600 font-semibold">Auction Ended</span>;
+  }
+
+  return (
+    <span className="font-mono text-lg">
+      {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+    </span>
+  );
+}
+
 export default function PropertyDetails({ params }) {
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -153,6 +190,18 @@ export default function PropertyDetails({ params }) {
                   <span className="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
                     {property.auctionStatus}
                   </span>
+                  {property.auctionStatus?.toLowerCase() === 'live' && property.auctionEnds && (
+                    <div className="mt-4">
+                      <div className="text-gray-700 font-semibold mb-1">Auction ends in</div>
+                      <CountdownTimer endTime={property.auctionEnds} />
+                    </div>
+                  )}
+                  {property.auctionStatus?.toLowerCase() === 'upcoming' && property.auctionStart && (
+                    <div className="mt-4">
+                      <div className="text-gray-700 font-semibold mb-1">Auction starts in</div>
+                      <CountdownTimer endTime={property.auctionStart} />
+                    </div>
+                  )}
                 </div>
                 <button
                   onClick={() => setShowBidModal(true)}
@@ -185,37 +234,59 @@ export default function PropertyDetails({ params }) {
 
           {/* Right Column - Owner Info and Contact */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
-              <h2 className="text-2xl font-semibold mb-4">Owner Information</h2>
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="w-16 h-16 relative rounded-full overflow-hidden">
-                  <Image
-                    src={property.ownerImage}
-                    alt={property.ownerName}
-                    fill
-                    className="object-cover"
-                  />
+            {property.location && (
+              <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+                <h2 className="text-2xl font-semibold mb-4">Map Location</h2>
+                <div className="w-full h-48 rounded-lg overflow-hidden mb-4">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(property.location)}&output=embed`}
+                  ></iframe>
                 </div>
-                <div>
-                  <h3 className="font-semibold">{property.ownerName}</h3>
+                <div className="text-gray-700 text-sm">{property.location}</div>
+              </div>
+            )}
+            {property.owner && (
+              <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+                <h2 className="text-2xl font-semibold mb-4">Owner Information</h2>
+                <div className="mb-4">
+                  <h3 className="font-semibold">{property.owner.name}</h3>
                   <p className="text-gray-600">Property Owner</p>
                 </div>
+                {property.owner.Rating && (
+                  <div className="mb-2">
+                    <span className="font-semibold">Rating: </span>
+                    <span className="text-yellow-600">{property.owner.Rating}</span>
+                  </div>
+                )}
               </div>
-              <p className="text-gray-600 mb-4">{property.ownerDescription}</p>
-            </div>
-
+            )}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-2xl font-semibold mb-4">Contact Information</h2>
               <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <span>{property.contactPhone}</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span>{property.contactEmail}</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span>{property.location}</span>
-                </div>
+                {property.owner?.contact && (
+                  <div className="flex items-center space-x-3">
+                    <span className="font-semibold">Contact:</span>
+                    <span>{property.owner.contact}</span>
+                  </div>
+                )}
+                {property.owner?.email && (
+                  <div className="flex items-center space-x-3">
+                    <span className="font-semibold">Email:</span>
+                    <span>{property.owner.email}</span>
+                  </div>
+                )}
+                {property.owner?.officeLocation && (
+                  <div className="flex items-center space-x-3">
+                    <span className="font-semibold">Office Location:</span>
+                    <span>{property.owner.officeLocation}</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
