@@ -9,13 +9,10 @@ import { signOut } from 'firebase/auth';
 
 export default function Listings() {
   const [user] = useAuthState(auth);
-  const router = useRouter()
-  const userSession = sessionStorage.getItem('user');
+  const router = useRouter();
 
-  console.log({user})
- 
-  if (!user && !userSession){
-    router.push('/sign-up')
+  if (!user) {
+    router.push('/sign-up');
   }
   
   const [properties, setProperties] = useState([]);
