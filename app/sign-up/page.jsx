@@ -1,23 +1,23 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebase/config';
+import { useRouter } from 'next/navigation';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+  const router = useRouter();
 
-  const handleSignUp = async () => {
-    try {
-      const res = await createUserWithEmailAndPassword(email, password);
-      console.log({ res });
-      sessionStorage.setItem('user', true);
-      setEmail('');
-      setPassword('');
-    } catch (e) {
-      console.error(e);
+  useEffect(() => {
+    if (user) {
+      router.push('/');
     }
+  }, [user, router]);
+
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(email, password);
   };
 
   return (

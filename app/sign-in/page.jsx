@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebase/config';
 import { useRouter } from 'next/navigation';
@@ -7,20 +7,17 @@ import { useRouter } from 'next/navigation';
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
 
-  const handleSignIn = async () => {
-    try {
-      const res = await signInWithEmailAndPassword(email, password);
-      console.log({ res });
-      sessionStorage.setItem('user', true);
-      setEmail('');
-      setPassword('');
+  useEffect(() => {
+    if (user) {
       router.push('/');
-    } catch (e) {
-      console.error(e);
     }
+  }, [user, router]);
+
+  const handleSignIn = () => {
+    signInWithEmailAndPassword(email, password);
   };
 
   return (
@@ -53,7 +50,7 @@ const SignIn = () => {
 
         <p className="mt-6 text-sm text-center text-gray-600">
           Don't have an account?{' '}
-          <a href="/signup" className="text-blue-600 hover:underline">
+          <a href="/sign-up" className="text-blue-600 hover:underline">
             Sign up
           </a>
         </p>
