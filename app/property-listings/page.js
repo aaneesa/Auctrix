@@ -2,8 +2,22 @@
 
 import { useState, useEffect } from 'react';
 import PropertyGrid from '../components/PropertyGrid';
+import {useAuthState} from 'react-firebase-hooks/auth'
+import {auth} from '@/app/firebase/config'
+import { useRouter } from 'next/navigation';
+import { signOut } from 'firebase/auth';
 
 export default function Listings() {
+  const [user] = useAuthState(auth);
+  const router = useRouter()
+  const userSession = sessionStorage.getItem('user');
+
+  console.log({user})
+ 
+  if (!user && !userSession){
+    router.push('/sign-up')
+  }
+  
   const [properties, setProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [loading, setLoading] = useState(true);

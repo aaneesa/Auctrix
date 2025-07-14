@@ -1,29 +1,26 @@
-import Link from 'next/link';
-
-export default function Hero() {
+import React from 'react'
+// Hero section with welcoming background image and intro ; the landing section
+function Hero() {
   return (
-    <div className="relative h-[500px] w-full">
-      <div className="absolute inset-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/images/hero-bg.jpeg')",
-          }}
-        >
-          <div className="absolute inset-0 bg-black/30" />
-        </div>
-      </div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center text-center">
-        <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-2xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
-            Find Your Dream Property Today
-          </h1>
-          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            Experience the thrill of luxury property auctions. Find exclusive homes, 
-            make competitive bids, and secure your perfect property.
-          </p>
-        </div>
+    <section className="relative h-[500px] w-full text-white">
+    <div className="absolute inset-0 bg-center bg-no-repeat bg-cover"
+      style={{ backgroundImage: "url('/images/hero-bg.jpeg')" }}
+    >
+      <div className="absolute inset-0 bg-black/50" />
+    </div>
+
+    <div className="relative z-10 h-full flex flex-col justify-center items-center px-5 text-center">
+      <div className="bg-black/50 p-6 rounded-lg shadow-lg max-w-3xl w-full">
+        <h1 className="text-3xl sm:text-4xl font-semibold mb-4">
+          Looking for a New Home?
+      </h1>
+        <p className="text-lg text-gray-300"> 
+          Browse handpicked listings, place your bids, and discover unique properties that fit your lifestyle.
+        </p>
       </div>
     </div>
+  </section>
   );
 }
+
+export default Hero

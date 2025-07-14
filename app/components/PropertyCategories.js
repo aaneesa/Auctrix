@@ -3,46 +3,45 @@ import Image from 'next/image';
 export default function PropertyCategories() {
   const categories = [
     {
-      title: 'Houses',
+      title: 'Homes',
       image: '/images/categories/house.jpeg',
-      description: 'Find your dream home from our extensive collection of houses.'
+      description: 'Browse cozy houses perfect for families, couples, or solo living.'
     },
     {
-      title: 'Apartments',
+      title: 'Flats',
       image: '/images/categories/apartment.jpg',
-      description: 'Modern apartments in prime locations across the city.'
+      description: 'Compact and modern apartments in urban and suburban areas.'
     },
     {
-      title: 'Commercial',
+      title: 'Villas',
       image: '/images/categories/commercial.jpeg',
-      description: 'Prime land plots for your future development projects.'
+      description: 'Spacious villas ideal for getaways or long-term retreats.'
     },
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center mb-12">Property Categories</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {categories.map((category) => (
-            <div 
-              key={category.title}
-              className="group"
+    <section className="py-14 bg-gray-100">
+      <div className="max-w-6xl mx-auto px-6">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-10">
+          What's here for you
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 rounded-md">
+          {categories.map((item) => (
+          <div 
+              key={item.title}
+              className="bg-white rounded-md shadow hover:shadow-md transition-shadow duration-200"
             >
-              <div className="bg-white rounded-xl shadow-sm overflow-hidden transition-transform duration-300 group-hover:shadow-md group-hover:-translate-y-1">
-                <div className="relative h-48 w-full">
-                  <Image
-                    src={category.image}
-                    alt={category.title}
-                    fill
-                    className="object-cover"
-                    priority={true}  
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
-                  <p className="text-gray-600">{category.description}</p>
-                </div>
+              <div className="relative h-44 w-full rounded-md">
+                <Image
+                  src={item.image}
+                  alt={`${item.title} category`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            <div className="p-5">
+                <h3 className="text-lg font-medium mb-1">{item.title}</h3>
+                <p className="text-sm text-gray-700">{item.description}</p>
               </div>
             </div>
           ))}

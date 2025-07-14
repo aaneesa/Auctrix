@@ -1,12 +1,30 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/app/firebase/config';
+import { useAuth } from '@/app/context/AuthContext'; 
 
 export default function Footer() {
+  const router = useRouter();
+  const { user } = useAuth(); 
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      sessionStorage.removeItem('user');
+      router.push('/sign-in');
+    } catch (error) {
+      console.error('Sign out failed:', error);
+    }
+  };
+
   return (
     <footer className="bg-slate-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Quick Links */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
@@ -40,15 +58,32 @@ export default function Footer() {
                   FAQs
                 </Link>
               </li>
+              {user && (
+                <>
+                  <li>
+                    <button
+                      onClick={handleSignOut}
+                      className="text-red-400 hover:text-red-200 transition-colors"
+                    >
+                      Sign Out
+                    </button>
+                  </li>
+                  <li className="text-sm text-blue-400">
+                    Logged in as <span className="font-medium">{user.email}</span>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
+
+          {/* Follow Us */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
             <ul className="space-y-2">
               <li>
-                <a 
-                  href="https://facebook.com" 
-                  target="_blank" 
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
@@ -56,9 +91,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a 
-                  href="https://linkedin.com" 
-                  target="_blank" 
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
@@ -66,9 +101,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a 
-                  href="https://instagram.com" 
-                  target="_blank" 
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
@@ -76,9 +111,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
@@ -87,6 +122,8 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
+          {/* Contact Info */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
             <ul className="space-y-2 text-gray-300">
@@ -104,4 +141,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-} 
+}
