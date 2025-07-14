@@ -25,6 +25,14 @@ const SignIn = () => {
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border border-blue-100">
         <h2 className="text-2xl font-semibold text-blue-700 mb-6 text-center">Welcome Back</h2>
 
+        {error && (
+          <div className="mb-4 text-red-600 text-center">
+            {error.message === "Firebase: Error (auth/user-not-found)." && "No user found with this email."}
+            {error.message === "Firebase: Error (auth/wrong-password)." && "Incorrect password."}
+            {!["Firebase: Error (auth/user-not-found).", "Firebase: Error (auth/wrong-password)."].includes(error.message) && error.message}
+          </div>
+        )}
+
         <input
           type="email"
           placeholder="you@example.com"

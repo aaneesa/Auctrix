@@ -1,74 +1,73 @@
 import Link from 'next/link';
 
 export default function WhyChooseUs() {
-  const features = [
+  const data = [
     {
-      title: "Premium Properties",
-      description: "Access to exclusive, high-end properties in prime locations",
+      title: 'Premium Listings',
+      des: 'Find luxurious properties in sought-after neighborhoods.',
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-slate-700">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2 7-7 7 7 2 2v10a1 1 0 01-1 1h-3a1 1 0 01-1-1v-4h-2v4a1 1 0 01-1 1H6a1 1 0 01-1-1V12z" />
         </svg>
       )
     },
     {
-      title: "Secure Transactions",
-      description: "Advanced encryption and secure payment processing",
+      title: 'Trusted Transactions',
+      des: 'Your data is protected with strong encryption protocols.',
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
+        <>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 text-slate-700 h-6 mb-[1px]">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M12 2.944a11.955 11.955 0 00-8.618 3.04 12.02 12.02 0 00-1.382 3.016c0 5.59 3.824 10.29 9 11.62 5.176-1.33 9-6.03 9-11.62a12.02 12.02 0 00-1.382-3.016A11.955 11.955 0 0012 2.944z" />
+          </svg>
+        </>
       )
     },
     {
-      title: "Expert Support",
-      description: "Dedicated team of real estate professionals",
+      title: 'Real Support',
+      des: 'Talk to real estate professionals whenever you need advice.',
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        <svg stroke="currentColor" className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0zM17 20h5v-2a3 3 0 00-5.36-1.86M17 20H7m0 0H2v-2a3 3 0 015.36-1.86M7 20v-2a5.002 5.002 0 019.29 0v2" />
         </svg>
       )
     }
   ];
 
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-[64px] bg-white">
+      <div className="max-w-[1100px] mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">Why Choose Auctrix?</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Experience the future of property auctions with our innovative platform
+          <h2 className="text-[1.875rem] font-bold text-gray-900 mb-2">Why Choose Auctrix?</h2>
+          <p className="text-[1rem] text-gray-600 max-w-[580px] mx-auto">
+            We make property auctions simpler, safer — and smarter.
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {features.map((feature) => (
-            <div 
-              key={feature.title}
-              className="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300"
-            >
-              <div className="text-slate-900 mb-4">
-                {feature.icon}
+
+        <div className="grid md:grid-cols-3 grid-cols-1 gap-7">
+          {data.map((item, i) => {
+            return (
+              <div className="bg-gray-50 p-5 rounded-xl border border-gray-100 hover:shadow-md" key={i}>
+                <div className="mb-3">{item.icon}</div>
+                <h3 className="text-lg font-semibold mb-[6px]">{item.title}</h3>
+                <p className="text-sm text-gray-600">{item.des}</p>
               </div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        <div className="mt-16 text-center">
-          <div className="bg-slate-900 rounded-2xl p-8 shadow-xl transform hover:scale-105 transition-transform duration-300">
-            <h3 className="text-2xl font-bold text-white mb-4">Ready to Start Your Property Journey?</h3>
-            <p className="text-gray-300 mb-6">Join thousands of successful buyers and sellers on Auctrix</p>
+        <div className="mt-14 text-center">
+          <div className="bg-slate-900 p-[30px] rounded-xl shadow-lg hover:scale-[1.02] transition duration-200 inline-block">
+            <h3 className="text-2xl text-white font-bold mb-3">Start Your Journey</h3>
+            <p className="text-gray-300 text-sm mb-5">Explore real opportunities with Auctrix today.</p>
             <Link
               href="/property-listings"
-              className="inline-block bg-white text-slate-900 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors duration-300"
+              className="bg-white text-slate-900 py-[12px] px-6 text-base font-medium rounded-lg hover:bg-gray-200"
             >
-              Get Started with Auctrix
+              View Listings
             </Link>
           </div>
         </div>
       </div>
     </section>
   );
-} 
+}
