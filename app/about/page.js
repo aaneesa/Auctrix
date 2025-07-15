@@ -67,7 +67,7 @@ export default function About() {
               <h3 className="text-xl font-semibold mb-2">Anwesha Adhikari</h3>
               <p className="text-gray-600 mb-2">CEO & Founder</p>
               <p className="text-gray-500 text-sm">
-                With over 20 years in real estate and technology, John leads Auctrix with vision and expertise.
+                With over 20 years in real estate and technology, Anwesha leads Auctrix with vision and expertise.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
