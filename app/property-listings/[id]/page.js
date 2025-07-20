@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
 function CountdownTimer({ endTime }) {
@@ -54,49 +54,28 @@ export default function PropertyDetails({ params }) {
   const [showBidHistory, setShowBidHistory] = useState(false);
 
   useEffect(() => {
-    const fetchProperty = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const response = await fetch('https://listingsprop.free.beeceptor.com/listingsprop', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          cache: 'no-store',
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch properties: ${response.status}`);
+    setLoading(true);
+    setError(null);
+  
+    fetch('https://listingsprop.free.beeceptor.com/listingsprop')
+      .then(res => res.json())
+      .then(data => {
+        const found = Array.isArray(data)
+          ? data.find(item => String(item.id) === String(params.id))
+          : null;
+        if (!found) {
+          setError('Property not found');
+        } else {
+          setProperty(found);
         }
-
-        const allProperties = await response.json();
-
-        if (!Array.isArray(allProperties)) {
-          throw new Error('Invalid response format');
-        }
-
-        const matched = allProperties.find(
-          (item) => String(item.id) === String(params.id)
-        );
-
-        if (!matched) {
-          throw new Error('Property not found');
-        }
-
-        setProperty(matched);
-      } catch (err) {
-        console.error('Fetch error:', err);
-        setError(err.message || 'Unable to load property details');
-      } finally {
         setLoading(false);
-      }
-    };
-
-    fetchProperty();
+      })
+      .catch(() => {
+        setError('Error loading property');
+        setLoading(false);
+      });
   }, [params.id]);
-
+  
   const formatPrice = (price) => {
     if (!price) return 'Price Not Available';
     return new Intl.NumberFormat('en-IN', {
@@ -108,13 +87,13 @@ export default function PropertyDetails({ params }) {
 
   const handleBidSubmit = async (e) => {
     e.preventDefault();
+
     setUserBid(bidAmount);
     setBidSubmitted(true);
     setShowBidModal(false);
     setBidAmount('');
   };
 
-  // Loading State
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -126,13 +105,13 @@ export default function PropertyDetails({ params }) {
     );
   }
 
-  // Error State
-  if (error) {
+  // Additional error handling
+  if (error || !property) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-semibold text-slate-900 mb-2">Error</h2>
-          <p className="text-red-600 mb-4">{error}</p>
+          <p className="text-red-600 mb-4">{error || 'Property not found'}</p>
           <Link 
             href="/property-listings"
             className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800"
@@ -143,28 +122,9 @@ export default function PropertyDetails({ params }) {
       </div>
     );
   }
-
-  // Property Not Found
-  if (!property) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-semibold text-slate-900 mb-2">Property Not Found</h2>
-          <Link 
-            href="/property-listings"
-            className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800"
-          >
-            Back to Listings
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  // Main Page
   return (
     <main className="min-h-screen bg-gray-50">
-            <div className="relative w-full">
+      <div className="relative w-full">
         <Carousel
           showArrows={true}
           showStatus={false}
@@ -243,7 +203,6 @@ export default function PropertyDetails({ params }) {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Info */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
               <div className="flex justify-between items-center">
@@ -547,4 +506,4 @@ export default function PropertyDetails({ params }) {
       )}
     </main>
   );
-}
+} 
