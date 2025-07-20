@@ -108,7 +108,6 @@ export default function PropertyDetails({ params }) {
 
   const handleBidSubmit = async (e) => {
     e.preventDefault();
-    // You can implement bid submission logic here if needed
     setUserBid(bidAmount);
     setBidSubmitted(true);
     setShowBidModal(false);

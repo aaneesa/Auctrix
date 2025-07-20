@@ -8,7 +8,7 @@ export default function PropertyCategories() {
       description: 'Browse cozy houses perfect for families, couples, or solo living.'
     },
     {
-      title: 'Flats',
+      title: 'Apartments',
       image: '/images/categories/apartment.jpg',
       description: 'Compact and modern apartments in urban and suburban areas.'
     },

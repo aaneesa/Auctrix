@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 export default function FAQs() {
-  const [toggle, setToggle] = useState(null);
+  const [show, setShow] = useState(null);
 
   const faqList = [
     {
@@ -61,13 +61,13 @@ export default function FAQs() {
         {faqList.map((item, i) => (
           <div className="bg-white rounded-md mb-4 shadow border border-gray-200" key={i}>
             <button
-              onClick={() => setToggle(toggle === i ? null : i)}
+              onClick={() => setShow(show === i ? null : i)}
               className="w-full text-left px-4 py-3 text-gray-900 text-sm font-semibold flex justify-between items-center"
             >
               <span>{item.question}</span>
-              <span className="font-bold text-gray-500">{toggle === i ? '-' : '+'}</span>
+              <span className="font-bold text-gray-500">{show === i ? '-' : '+'}</span>
             </button>
-            {toggle === i ? (
+            {show === i ? (
               <div className="px-4 pb-3 text-gray-600 text-sm">
                 {item.answer}
               </div>
