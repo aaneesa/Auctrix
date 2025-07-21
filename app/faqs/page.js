@@ -1,7 +1,5 @@
 'use client';
-
 import { useState } from 'react';
-
 export default function FAQs() {
   const [show, setShow] = useState(null);
 

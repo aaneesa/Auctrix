@@ -16,7 +16,7 @@ export default function WhyChooseUs() {
       des: 'Your data is protected with strong encryption protocols.',
       icon: (
         <>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 text-slate-700 h-6 mb-[1px]">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 text-slate-700 h-6 mb-[1px]">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M12 2.944a11.955 11.955 0 00-8.618 3.04 12.02 12.02 0 00-1.382 3.016c0 5.59 3.824 10.29 9 11.62 5.176-1.33 9-6.03 9-11.62a12.02 12.02 0 00-1.382-3.016A11.955 11.955 0 0012 2.944z" />
           </svg>
         </>
